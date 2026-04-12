@@ -1,127 +1,433 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mek Game Studios</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mek Game Studios</title>
 
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
-body {
-  font-family: Arial;
-  background: #0f1117;
-  color: white;
-}
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-/* TOP BAR */
-.topbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 60px;
-  background: #181c24;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  z-index: 100;
-}
+    :root {
+      --bg: #0b1020;
+      --bg-soft: #121a2f;
+      --panel: rgba(255, 255, 255, 0.04);
+      --panel-strong: rgba(255, 255, 255, 0.06);
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f5f7ff;
+      --muted: #aeb8d0;
+      --accent: #8b5cf6;
+      --accent-2: #22c55e;
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    }
 
-/* SIDE BAR */
-.sidebar {
-  position: fixed;
-  top: 60px;
-  left: 0;
-  width: 200px;
-  height: 100%;
-  background: #141821;
-  padding: 20px;
-}
+    body {
+      font-family: "Inter", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(139, 92, 246, 0.16), transparent 24%),
+        radial-gradient(circle at top left, rgba(34, 197, 94, 0.08), transparent 18%),
+        linear-gradient(180deg, #0b1020 0%, #0a0f1d 100%);
+      min-height: 100vh;
+    }
 
-/* CONTENT */
-.content {
-  margin-left: 200px;
-  margin-top: 60px;
-  padding: 30px;
-}
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: rgba(11, 16, 32, 0.82);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+    }
 
-/* CARD */
-.card {
-  background: #1c2230;
-  padding: 20px;
-  border-radius: 12px;
-  margin-bottom: 20px;
-}
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
 
-/* GAME BOX */
-.game {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-}
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      object-fit: cover;
+      background: #1f2937;
+      border: 1px solid var(--border);
+    }
 
-.game img {
-  width: 80px;
-  border-radius: 10px;
-}
+    .top-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
 
-.icons {
-  display: flex;
-  gap: 15px;
-}
+    .lang {
+      display: flex;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--muted);
+    }
 
-a {
-  color: white;
-  text-decoration: none;
-}
-</style>
+    .lang span {
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .lang span:hover {
+      color: white;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 72px;
+      left: 0;
+      width: 230px;
+      height: calc(100vh - 72px);
+      padding: 22px 16px;
+      background: rgba(7, 11, 24, 0.72);
+      border-right: 1px solid var(--border);
+    }
+
+    .menu-title {
+      color: #7f8db0;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      padding-left: 8px;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .menu a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #d8def0;
+      padding: 12px 14px;
+      border-radius: 14px;
+      transition: 0.2s ease;
+      background: transparent;
+      border: 1px solid transparent;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .menu a:hover,
+    .menu a.active {
+      background: rgba(139, 92, 246, 0.12);
+      border-color: rgba(139, 92, 246, 0.28);
+      color: white;
+    }
+
+    .content {
+      margin-left: 230px;
+      padding: 104px 28px 28px;
+    }
+
+    .hero {
+      margin-bottom: 22px;
+      padding: 26px;
+      border-radius: 24px;
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.14), rgba(255,255,255,0.03));
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .hero h1 {
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      letter-spacing: -0.03em;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+      max-width: 700px;
+    }
+
+    .section {
+      margin-bottom: 22px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .game-card {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 18px;
+      text-decoration: none;
+      color: inherit;
+      transition: 0.2s ease;
+    }
+
+    .game-card:hover {
+      background: var(--panel-strong);
+    }
+
+    .game-thumb {
+      width: 96px;
+      height: 96px;
+      border-radius: 18px;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #1d2438;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .game-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .game-info h3 {
+      font-size: 28px;
+      margin-bottom: 6px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .game-info p {
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 15px;
+      margin-bottom: 10px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 7px 11px;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 999px;
+      background: rgba(34, 197, 94, 0.12);
+      color: #8df0b2;
+      border: 1px solid rgba(34, 197, 94, 0.24);
+    }
+
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      padding: 18px;
+    }
+
+    .link-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      text-decoration: none;
+      color: white;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      font-weight: 600;
+      transition: 0.2s ease;
+    }
+
+    .link-btn:hover {
+      background: rgba(255,255,255,0.06);
+      transform: translateY(-2px);
+    }
+
+    .link-btn i {
+      font-size: 18px;
+      width: 20px;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .sidebar {
+        display: none;
+      }
+
+      .content {
+        margin-left: 0;
+        padding: 96px 16px 20px;
+      }
+
+      .links-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 26px;
+      }
+
+      .game-info h3 {
+        font-size: 24px;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .topbar {
+        padding: 0 14px;
+      }
+
+      .brand {
+        font-size: 18px;
+      }
+
+      .brand-logo {
+        width: 34px;
+        height: 34px;
+      }
+
+      .game-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .game-thumb {
+        width: 100%;
+        height: 180px;
+      }
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="topbar">
-  <h2>Mek Game Studios</h2>
-  <div class="icons">
-    <a href="#">🇹🇷</a>
-    <a href="#">🇺🇸</a>
-  </div>
-</div>
+  <header class="topbar">
+    <div class="brand">
+      <img class="brand-logo" src="https://via.placeholder.com/80x80.png?text=MGS" alt="Mek Game Studios Logo">
+      <span>Mek Game Studios</span>
+    </div>
 
-<div class="sidebar">
-  <p>🏠 Home</p>
-  <p>🎮 Games</p>
-  <p>💬 Community</p>
-</div>
-
-<div class="content">
-
-  <h2>🎮 Games</h2>
-
-  <div class="card">
-    <div class="game">
-      <img src="https://via.placeholder.com/80">
-      <div>
-        <h3>Forgotten Quest</h3>
-        <p>Single player fantasy RPG</p>
+    <div class="top-right">
+      <div class="lang">
+        <span>TR</span>
+        <span>US</span>
       </div>
     </div>
-  </div>
+  </header>
 
-  <h2>🌐 Links</h2>
+  <aside class="sidebar">
+    <div class="menu-title">Navigation</div>
+    <nav class="menu">
+      <a class="active" href="#"><i class="fa-solid fa-house"></i> Home</a>
+      <a href="#games"><i class="fa-solid fa-gamepad"></i> Games</a>
+      <a href="#community"><i class="fa-solid fa-users"></i> Community</a>
+    </nav>
+  </aside>
 
-  <div class="card">
-    <p>📺 YouTube</p>
-    <p>💬 Discord</p>
-    <p>📸 Instagram</p>
-  </div>
+  <main class="content">
+    <section class="hero">
+      <h1>Official hub for Mek Game Studios</h1>
+      <p>
+        Explore our game, follow development updates, and join the community through the links below.
+      </p>
+    </section>
 
-</div>
+    <section class="section" id="games">
+      <div class="section-title">
+        <i class="fa-solid fa-gamepad"></i>
+        <span>Games</span>
+      </div>
+
+      <div class="panel">
+        <a class="game-card" href="#" target="_blank">
+          <div class="game-thumb">
+            <img src="https://via.placeholder.com/300x300.png?text=Forgotten+Quest" alt="Forgotten Quest">
+          </div>
+
+          <div class="game-info">
+            <h3>Forgotten Quest</h3>
+            <p>Single-player stylized fantasy RPG with different combat styles and exploration-focused progression.</p>
+            <span class="badge">Featured Game</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="section" id="community">
+      <div class="section-title">
+        <i class="fa-solid fa-globe"></i>
+        <span>Links</span>
+      </div>
+
+      <div class="panel">
+        <div class="links-grid">
+          <a class="link-btn" href="#" target="_blank">
+            <i class="fa-brands fa-google-play"></i>
+            <span>Play Store</span>
+          </a>
+
+          <a class="link-btn" href="#" target="_blank">
+            <i class="fa-solid fa-scroll"></i>
+            <span>Patch Notes</span>
+          </a>
+
+          <a class="link-btn" href="#" target="_blank">
+            <i class="fa-brands fa-youtube"></i>
+            <span>YouTube</span>
+          </a>
+
+          <a class="link-btn" href="#" target="_blank">
+            <i class="fa-brands fa-discord"></i>
+            <span>Discord</span>
+          </a>
+
+          <a class="link-btn" href="#" target="_blank">
+            <i class="fa-brands fa-instagram"></i>
+            <span>Instagram</span>
+          </a>
+
+          <a class="link-btn" href="mailto:info@mekgamestudios.com">
+            <i class="fa-solid fa-envelope"></i>
+            <span>Contact</span>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
 
 </body>
 </html>
