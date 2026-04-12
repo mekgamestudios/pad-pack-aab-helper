@@ -1,0 +1,128 @@
+index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mek Game Studios</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial;
+  background: #0f1117;
+  color: white;
+}
+
+/* TOP BAR */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: #181c24;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 100;
+}
+
+/* SIDE BAR */
+.sidebar {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 200px;
+  height: 100%;
+  background: #141821;
+  padding: 20px;
+}
+
+/* CONTENT */
+.content {
+  margin-left: 200px;
+  margin-top: 60px;
+  padding: 30px;
+}
+
+/* CARD */
+.card {
+  background: #1c2230;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+/* GAME BOX */
+.game {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.game img {
+  width: 80px;
+  border-radius: 10px;
+}
+
+.icons {
+  display: flex;
+  gap: 15px;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+  <h2>Mek Game Studios</h2>
+  <div class="icons">
+    <a href="#">🇹🇷</a>
+    <a href="#">🇺🇸</a>
+  </div>
+</div>
+
+<div class="sidebar">
+  <p>🏠 Home</p>
+  <p>🎮 Games</p>
+  <p>💬 Community</p>
+</div>
+
+<div class="content">
+
+  <h2>🎮 Games</h2>
+
+  <div class="card">
+    <div class="game">
+      <img src="https://via.placeholder.com/80">
+      <div>
+        <h3>Forgotten Quest</h3>
+        <p>Single player fantasy RPG</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>🌐 Links</h2>
+
+  <div class="card">
+    <p>📺 YouTube</p>
+    <p>💬 Discord</p>
+    <p>📸 Instagram</p>
+  </div>
+
+</div>
+
+</body>
+</html>
