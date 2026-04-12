@@ -440,42 +440,39 @@
   </main>
 
   <script>
-    function openSupportMail() {
-      const to = "info@mekgamestudios.com";
-      const subject = "Forgotten Quest - Player Feedback & Support";
-      const body = [
-        "Hello,",
-        "",
-        "I want to share feedback about Forgotten Quest.",
-        "",
-        "Device:",
-        "Problem/Feedback:"
-      ].join("\n");
+function openSupportMail() {
+  const to = "info@mekgamestudios.com";
+  const subject = "Forgotten Quest - Player Feedback & Support";
+  const body = `Hello,
 
-      const mailtoUrl =
-        `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+I want to share feedback about Forgotten Quest.
 
-      const gmailUrl =
-        `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+Device:
+Problem/Feedback:`;
 
-      let pageHidden = false;
+  const mailto = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
-      const onVisibilityChange = () => {
-        if (document.hidden) {
-          pageHidden = true;
-        }
-      };
+  const gmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
-      document.addEventListener("visibilitychange", onVisibilityChange, { once: true });
+  let triggered = false;
 
-      window.location.href = mailtoUrl;
+  // kullanıcı sayfadan ayrılırsa mail app açıldı demektir
+  const onBlur = () => {
+    triggered = true;
+  };
 
-      setTimeout(() => {
-        if (!pageHidden) {
-          window.open(gmailUrl, "_blank", "noopener");
-        }
-      }, 900);
+  window.addEventListener("blur", onBlur, { once: true });
+
+  // mailto dene
+  window.location.href = mailto;
+
+  // fallback
+  setTimeout(() => {
+    if (!triggered) {
+      window.location.href = gmail;
     }
-  </script>
+  }, 1200);
+}
+</script>
 </body>
 </html>
