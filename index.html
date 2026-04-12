@@ -439,7 +439,7 @@
     </section>
   </main>
 
-  <script>
+<script>
 function openSupportMail() {
   const to = "info@mekgamestudios.com";
   const subject = "Forgotten Quest - Player Feedback & Support";
@@ -451,27 +451,38 @@ Device:
 Problem/Feedback:`;
 
   const mailto = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
   const gmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+  const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
   let triggered = false;
 
-  // kullanıcı sayfadan ayrılırsa mail app açıldı demektir
-  const onBlur = () => {
+  window.addEventListener("blur", () => {
     triggered = true;
-  };
+  }, { once: true });
 
-  window.addEventListener("blur", onBlur, { once: true });
+  // 📱 Mobil
+  if (isMobile) {
+    window.location.href = mailto;
 
-  // mailto dene
-  window.location.href = mailto;
+    setTimeout(() => {
+      if (!triggered) {
+        window.location.href = gmail;
+      }
+    }, 1000);
+  }
 
-  // fallback
-  setTimeout(() => {
-    if (!triggered) {
-      window.location.href = gmail;
-    }
-  }, 1200);
+  // 💻 PC
+  else {
+    window.location.href = mailto;
+
+    setTimeout(() => {
+      if (!triggered) {
+        // Gmail’i aynı sekmede aç (popup yok)
+        window.location.href = gmail;
+      }
+    }, 1200);
+  }
 }
 </script>
 </body>
