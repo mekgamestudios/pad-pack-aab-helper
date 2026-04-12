@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mek Game Studios</title>
+  <meta name="description" content="Official links, games, and community hub for Mek Game Studios." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,6 +29,10 @@
       --accent: #8b5cf6;
       --accent-2: #22c55e;
       --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
@@ -147,6 +152,7 @@
     .content {
       margin-left: 230px;
       padding: 104px 28px 28px;
+      max-width: 1280px;
     }
 
     .hero {
@@ -258,7 +264,8 @@
       padding: 18px;
     }
 
-    .link-btn {
+    .link-btn,
+    .contact-btn {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -271,14 +278,17 @@
       padding: 16px;
       font-weight: 600;
       transition: 0.2s ease;
+      cursor: pointer;
     }
 
-    .link-btn:hover {
+    .link-btn:hover,
+    .contact-btn:hover {
       background: rgba(255,255,255,0.06);
       transform: translateY(-2px);
     }
 
-    .link-btn i {
+    .link-btn i,
+    .contact-btn i {
       font-size: 18px;
       width: 20px;
       text-align: center;
@@ -373,7 +383,7 @@
       </div>
 
       <div class="panel">
-        <a class="game-card" href="#" target="_blank">
+        <a class="game-card" href="https://play.google.com/store/apps/dev?id=7220577446350968191&hl=en-US" target="_blank" rel="noopener noreferrer">
           <div class="game-thumb">
             <img src="https://via.placeholder.com/300x300.png?text=Forgotten+Quest" alt="Forgotten Quest">
           </div>
@@ -395,39 +405,77 @@
 
       <div class="panel">
         <div class="links-grid">
-          <a class="link-btn" href="#" target="_blank">
+          <a class="link-btn" href="https://play.google.com/store/apps/dev?id=7220577446350968191&hl=en-US" target="_blank" rel="noopener noreferrer">
             <i class="fa-brands fa-google-play"></i>
             <span>Play Store</span>
           </a>
 
-          <a class="link-btn" href="#" target="_blank">
+          <a class="link-btn" href="patch-notes.html">
             <i class="fa-solid fa-scroll"></i>
             <span>Patch Notes</span>
           </a>
 
-          <a class="link-btn" href="#" target="_blank">
+          <a class="link-btn" href="https://www.youtube.com/@mekgamestudios" target="_blank" rel="noopener noreferrer">
             <i class="fa-brands fa-youtube"></i>
             <span>YouTube</span>
           </a>
 
-          <a class="link-btn" href="#" target="_blank">
+          <a class="link-btn" href="https://discord.gg/vJSEkh9yKc" target="_blank" rel="noopener noreferrer">
             <i class="fa-brands fa-discord"></i>
             <span>Discord</span>
           </a>
 
-          <a class="link-btn" href="#" target="_blank">
+          <a class="link-btn" href="https://www.instagram.com/mekgamestudios/" target="_blank" rel="noopener noreferrer">
             <i class="fa-brands fa-instagram"></i>
             <span>Instagram</span>
           </a>
 
-          <a class="link-btn" href="mailto:info@mekgamestudios.com">
+          <button class="contact-btn" type="button" onclick="openSupportMail()">
             <i class="fa-solid fa-envelope"></i>
             <span>Contact</span>
-          </a>
+          </button>
         </div>
       </div>
     </section>
   </main>
 
+  <script>
+    function openSupportMail() {
+      const to = "info@mekgamestudios.com";
+      const subject = "Forgotten Quest - Player Feedback & Support";
+      const body = [
+        "Hello,",
+        "",
+        "I want to share feedback about Forgotten Quest.",
+        "",
+        "Device:",
+        "Problem/Feedback:"
+      ].join("\n");
+
+      const mailtoUrl =
+        `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+      const gmailUrl =
+        `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+      let pageHidden = false;
+
+      const onVisibilityChange = () => {
+        if (document.hidden) {
+          pageHidden = true;
+        }
+      };
+
+      document.addEventListener("visibilitychange", onVisibilityChange, { once: true });
+
+      window.location.href = mailtoUrl;
+
+      setTimeout(() => {
+        if (!pageHidden) {
+          window.open(gmailUrl, "_blank", "noopener");
+        }
+      }, 900);
+    }
+  </script>
 </body>
 </html>
