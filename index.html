@@ -1,201 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PAD Pack AAB Helper Documentation</title>
+<div class="section">
+<h2>Usage Workflow (Setup & Asset Pack Generation)</h2>
 
-<style>
-body{
-    margin:0;
-    font-family:Arial, sans-serif;
-    background:#0f1117;
-    color:#eaeef7;
-    line-height:1.6;
-}
-
-.container{
-    max-width:1000px;
-    margin:auto;
-    padding:20px;
-}
-
-h1,h2,h3{
-    color:#7fdfff;
-}
-
-.section{
-    background:#171a23;
-    padding:20px;
-    margin:20px 0;
-    border-radius:10px;
-    border:1px solid #2b3142;
-}
-
-code{
-    background:#0b0d12;
-    padding:4px 6px;
-    border-radius:5px;
-    border:1px solid #2b3142;
-}
-
-.warning{
-    border-left:4px solid #ff6b6b;
-    padding:10px;
-    background:#2a1a1a;
-}
-
-.note{
-    border-left:4px solid #4cc9f0;
-    padding:10px;
-    background:#1a2a2a;
-}
-
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-<h1>PAD Pack AAB Helper</h1>
 <p>
-Documentation for Unreal Engine plugin used with Google Play Asset Delivery (PAD) and Android App Bundle (AAB).
+Follow the steps below to correctly configure your project for Google Play Asset Delivery (PAD)
+and ensure asset packs are generated and detected by the plugin.
 </p>
 
-<!-- ===================== -->
-<div class="section">
-<h2>Overview</h2>
-<p>
-This plugin is a helper for Unreal Engine Android projects using chunk-based packaging and Google PAD.
-It provides generated asset pack names and ensures correct AAB asset pack inclusion.
-</p>
+<h3>Step 1 — Enable Required Plugins</h3>
+<pre><code>Edit → Plugins
 
-<div class="note">
-This plugin does NOT handle downloads. It works together with Unreal's GooglePAD system.
-</div>
-</div>
+✔ GooglePAD
+✔ PAD Pack AAB Helper
 
-<!-- ===================== -->
-<div class="section">
-<h2>Required Project Setup</h2>
+Restart Editor</code></pre>
 
-<h3>1. Enable Google PAD</h3>
-<pre><code>Edit → Plugins → GooglePAD → Enable</code></pre>
-
-<h3>2. Packaging Settings</h3>
-<pre><code>Project Settings → Packaging
-
-✔ Use Pak File
-✔ Generate Chunks
-✔ Generate Chunk Install Data
-✔ For Distribution
-✔ Full Rebuild
-
-❌ Build HTTP Chunk Install Data</code></pre>
-
-<h3>3. Asset Manager Setup</h3>
-<pre><code>Project Settings → Asset Manager
-
-✔ Map
-✔ PrimaryAssetLabel
-
-Primary Asset Label:
-Chunk ID = 101+
-Cook Rule = Always Cook
-Apply Recursively = ON</code></pre>
-
-<h3>4. Android Settings</h3>
-<pre><code>Project Settings → Android
+<h3>Step 2 — Configure Android Build</h3>
+<pre><code>Project Settings → Platforms → Android
 
 ✔ Build App Bundle (AAB)
 ✔ For Distribution
 ❌ Package game data inside APK</code></pre>
 
-<h3>5. Google PAD Settings</h3>
-<pre><code>Project Settings → Plugins → GooglePAD
+<h3>Step 3 — Configure Packaging Settings</h3>
+<pre><code>Project Settings → Packaging
 
-✔ Enable Plugin
-✔ Only Distribution</code></pre>
+✔ Use Pak File
+✔ Generate Chunks
+✔ Generate Chunk Install Data
+✔ Full Rebuild
+✔ For Distribution
 
-</div>
+❌ Build HTTP Chunk Install Data</code></pre>
 
-<!-- ===================== -->
-<div class="section">
-<h2>Critical Rules</h2>
+<h3>Step 4 — Setup Asset Manager (Chunk System)</h3>
+<pre><code>Project Settings → Asset Manager
 
-<pre><code>Chunk 0 → Base APK
+Primary Asset Types:
+✔ Map
+✔ PrimaryAssetLabel</code></pre>
+
+<p>Create Primary Asset Labels:</p>
+
+<pre><code>Content Browser → Right Click → Misc → Primary Asset Label
+
+Settings:
+Chunk ID = 101, 102, ...
+Cook Rule = Always Cook
+Apply Recursively = ON</code></pre>
+
+<h3>Step 5 — Assign Assets to Chunks</h3>
+<pre><code>Chunk 0 → Base (APK)
 Chunk 100+ → PAD Asset Packs</code></pre>
 
 <div class="warning">
-If Chunk 0 references an asset, it will NOT be included in PAD.
-It will be forced into base package.
+If an asset is referenced by Chunk 0, it will NOT be included in PAD.
+It will be packaged inside the base APK.
 </div>
 
-</div>
-
-<!-- ===================== -->
-<div class="section">
-<h2>Build & Verification</h2>
-
+<h3>Step 6 — Package the Project</h3>
 <pre><code>File → Package Project → Android (AAB)</code></pre>
 
-Check:
-
+<h3>Step 7 — Verify Generated Pak Files</h3>
 <pre><code>Saved/StagedBuilds/.../Content/Paks</code></pre>
 
-Expected:
+<p>Expected output:</p>
 
 <pre><code>pakchunk0-Android_ASTC.pak
 pakchunk101-Android_ASTC.pak
 pakchunk102-Android_ASTC.pak</code></pre>
 
-</div>
-
-<!-- ===================== -->
-<div class="section">
-<h2>Plugin Function</h2>
-
+<h3>Step 8 — Plugin Behavior</h3>
 <pre><code>✔ Detects generated pakchunkXXX files
-✔ Converts them into PAD asset packs
+✔ Registers them as PAD asset packs
 ✔ Provides pack list to Blueprint
-✔ Ensures AAB inclusion</code></pre>
+✔ Ensures inclusion in AAB</code></pre>
 
-</div>
-
-<!-- ===================== -->
-<div class="section">
-<h2>Limitations</h2>
-
-<pre><code>✔ Android only
-✔ Requires AAB build
-✔ Requires GooglePAD
-✔ Requires chunk system</code></pre>
-
-</div>
-
-<!-- ===================== -->
-<div class="section">
-<h2>What This Plugin Does NOT Do</h2>
-
-<pre><code>❌ Does NOT download asset packs
-❌ Does NOT modify ini files
-❌ Does NOT create chunks
-❌ Does NOT replace GooglePAD system</code></pre>
-
-</div>
-
-<!-- ===================== -->
-<div class="section">
-<h2>Support</h2>
-
-<p>Mek Game Studios</p>
-<p><a href="https://mekgamestudios.com">Website</a></p>
-<p><a href="https://discord.gg/vJSEkh9yKc">Discord</a></p>
-
+<div class="note">
+The plugin does not modify packaging settings or create chunks.
+It works on already generated chunk-based pak files.
 </div>
 
 </div>
-
-</body>
-</html>
