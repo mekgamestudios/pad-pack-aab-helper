@@ -1,472 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mek Game Studios</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  font-family:Inter, Arial, sans-serif;
-  background:
-    radial-gradient(circle at top right, rgba(139,92,246,.10), transparent 25%),
-    linear-gradient(180deg,#0b1020 0%,#0a0f1d 100%);
-  color:white;
-}
-
-.topbar{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:70px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 20px;
-  background:rgba(11,16,32,.95);
-  backdrop-filter:blur(8px);
-  border-bottom:1px solid rgba(255,255,255,.08);
-  z-index:10;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-weight:800;
-  font-size:22px;
-}
-
-.brand img{
-  width:40px;
-  height:40px;
-  border-radius:12px;
-  object-fit:cover;
-  border:1px solid rgba(255,255,255,.12);
-}
-
-.sidebar{
-  position:fixed;
-  top:70px;
-  left:0;
-  width:220px;
-  height:calc(100vh - 70px);
-  padding:20px;
-  border-right:1px solid rgba(255,255,255,.08);
-  background:rgba(255,255,255,.01);
-}
-
-.sidebar a{
-  display:block;
-  margin-bottom:12px;
-  color:#aaa;
-  text-decoration:none;
-  padding:10px 12px;
-  border-radius:10px;
-  transition:.2s ease;
-}
-
-.sidebar a:hover{
-  color:white;
-  background:rgba(255,255,255,.05);
-}
-
-.content{
-  margin-left:220px;
-  padding:100px 20px 40px;
-}
-
-.section{
-  margin-bottom:40px;
-}
-
-.section h2{
-  margin-bottom:15px;
-  font-size:28px;
-}
-
-/* PANELS */
-.panel{
-  background:#11182e;
-  padding:20px;
-  border-radius:15px;
-  border:1px solid rgba(255,255,255,.06);
-  box-shadow:0 14px 40px rgba(0,0,0,.22);
-}
-
-/* GAME */
-.game-card{
-  display:flex;
-  gap:20px;
-  align-items:flex-start;
-}
-
-.game-card img{
-  width:220px;
-  height:220px;
-  object-fit:cover;
-  border-radius:12px;
-  flex-shrink:0;
-}
-
-.game-info h2{
-  margin-bottom:14px;
-  font-size:34px;
-  line-height:1.1;
-}
-
-.game-info p{
-  color:#d2d8ea;
-  line-height:1.75;
-  margin-bottom:16px;
-  white-space:pre-line;
-}
-
-.feature-list{
-  list-style:none;
-  margin-bottom:18px;
-}
-
-.feature-list li{
-  color:#e6ebff;
-  margin-bottom:8px;
-  line-height:1.6;
-}
-
-.button-row{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-}
-
-/* COMMUNITY */
-.cards{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-}
-
-.card{
-  position:relative;
-  height:260px;
-  border-radius:15px;
-  overflow:hidden;
-  text-decoration:none;
-  color:white;
-  border:1px solid rgba(255,255,255,.08);
-  background:#11182e;
-  transition:transform .2s ease, border-color .2s ease;
-}
-
-.card:hover{
-  transform:translateY(-5px);
-  border-color:rgba(139,92,246,.35);
-}
-
-.card img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  filter:brightness(.45);
-}
-
-.card::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(180deg, rgba(0,0,0,.05) 0%, rgba(0,0,0,.65) 100%);
-}
-
-.card .overlay{
-  position:absolute;
-  left:18px;
-  right:18px;
-  bottom:18px;
-  z-index:2;
-}
-
-.card .overlay i{
-  font-size:22px;
-  margin-bottom:8px;
-}
-
-.card .overlay h3{
-  font-size:24px;
-  margin-bottom:6px;
-}
-
-.card .overlay p{
-  color:#d7def1;
-  font-size:14px;
-  line-height:1.45;
-}
-
-.discord-card{
-  background:#11182e;
-  padding:14px;
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-
-.discord-card iframe{
-  width:100%;
-  height:100%;
-  min-height:180px;
-  border-radius:12px;
-  border:none;
-  background:#0f172a;
-}
-
-.discord-footer{
-  position:relative;
-  z-index:2;
-}
-
-/* CONTACT */
-.contact{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-}
-
-.btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  padding:12px 15px;
-  background:#222b3f;
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:10px;
-  text-decoration:none;
-  color:white;
-  cursor:pointer;
-  transition:.2s ease;
-}
-
-.btn:hover{
-  background:#2b3550;
-  transform:translateY(-2px);
-}
-
-.btn.primary{
-  background:linear-gradient(135deg,#7c3aed,#8b5cf6);
-  border-color:rgba(139,92,246,.45);
-}
-
-.btn.primary:hover{
-  background:linear-gradient(135deg,#6d28d9,#7c3aed);
-}
-
-iframe{
-  width:100%;
-  height:260px;
-  border-radius:12px;
-  border:none;
-}
-
-@media (max-width: 1000px){
-  .cards{
-    grid-template-columns:1fr;
-  }
-
-  .game-card{
-    flex-direction:column;
-  }
-
-  .game-card img{
-    width:100%;
-    max-width:320px;
-    height:auto;
-  }
-}
-
-@media (max-width: 800px){
-  .sidebar{
-    display:none;
-  }
-
-  .content{
-    margin-left:0;
-    padding:90px 16px 30px;
-  }
-
-  .brand{
-    font-size:18px;
-  }
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PAD Pack AAB Helper Documentation | Mek Game Studios</title>
+  <meta name="description" content="Documentation for PAD Pack AAB Helper, an Unreal Engine 5 Android helper for Google PAD and AAB asset packs." />
+  <style>
+    :root{--bg:#0f1117;--panel:#171a23;--panel2:#202432;--text:#eef1f7;--muted:#aab2c5;--accent:#70d6ff;--accent2:#8df0b3;--danger:#ff8888;--border:#2b3142;--code:#0b0d12}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+    a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+    header{padding:56px 22px 36px;background:radial-gradient(circle at top left,rgba(112,214,255,.22),transparent 35%),linear-gradient(135deg,#111624,#0f1117 70%);border-bottom:1px solid var(--border)}
+    .wrap{max-width:1080px;margin:0 auto}.hero-title{margin:0;font-size:clamp(2rem,4vw,4rem);line-height:1.1;letter-spacing:-.04em}.hero-subtitle{max-width:850px;margin:18px 0 0;color:var(--muted);font-size:1.08rem}
+    .badge-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}.badge{border:1px solid var(--border);background:rgba(255,255,255,.04);color:var(--text);padding:7px 11px;border-radius:999px;font-size:.86rem}
+    main{padding:34px 22px 64px} nav,section{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:22px;margin:22px 0}
+    nav strong{display:block;margin-bottom:10px;color:var(--accent2)} nav a{display:inline-block;margin:6px 16px 6px 0;color:var(--muted)}
+    h2{margin-top:0;font-size:1.55rem;letter-spacing:-.02em} h3{margin-top:24px;color:var(--accent2);font-size:1.08rem} p,li{color:var(--muted)} strong{color:var(--text)}
+    code{background:var(--code);border:1px solid var(--border);color:#d7eaff;padding:2px 6px;border-radius:6px;font-size:.92em}
+    pre{overflow-x:auto;background:var(--code);border:1px solid var(--border);border-radius:14px;padding:16px;color:#d7eaff;font-size:.92rem}
+    table{width:100%;border-collapse:collapse;margin:16px 0;border-radius:12px;overflow:hidden} th,td{border:1px solid var(--border);padding:11px 12px;text-align:left;vertical-align:top} th{background:var(--panel2);color:var(--text)} td{color:var(--muted)}
+    .note{border-left:4px solid var(--accent);background:rgba(112,214,255,.07);padding:12px 14px;border-radius:10px;color:var(--muted)}.warning{border-left:4px solid var(--danger);background:rgba(255,136,136,.08);padding:12px 14px;border-radius:10px;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:14px}.card{background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:16px}.card h3{margin-top:0;margin-bottom:8px}
+    footer{padding:30px 22px;color:var(--muted);border-top:1px solid var(--border);background:#0b0d12}
+  </style>
 </head>
-
 <body>
+  <header><div class="wrap">
+    <h1 class="hero-title">PAD Pack AAB Helper</h1>
+    <p class="hero-subtitle">Documentation for an Unreal Engine 5 Android plugin that helps generated chunk-based asset packs appear correctly in Android App Bundle builds using Google Play Asset Delivery.</p>
+    <div class="badge-row"><span class="badge">Unreal Engine 5.6</span><span class="badge">Android</span><span class="badge">Google PAD</span><span class="badge">AAB Asset Packs</span><span class="badge">Blueprint Callable</span></div>
+  </div></header>
 
-<div class="topbar">
-  <div class="brand">
-    <img src="logo.png" alt="Mek Game Studios Logo">
-    Mek Game Studios
-  </div>
-</div>
+  <main class="wrap">
+    <nav>
+      <strong>Contents</strong>
+      <a href="#overview">Overview</a><a href="#features">Features</a><a href="#requirements">Requirements</a><a href="#installation">Installation</a><a href="#setup">Project Setup</a><a href="#blueprint">Blueprint Usage</a><a href="#packaging">Packaging Workflow</a><a href="#troubleshooting">Troubleshooting</a><a href="#support">Support</a>
+    </nav>
 
-<div class="sidebar">
-  <a href="#">Home</a>
-  <a href="#games">Games</a>
-  <a href="#community">Community</a>
-  <a href="#contact">Contact</a>
-</div>
+    <section id="overview">
+      <h2>Overview</h2>
+      <p><strong>PAD Pack AAB Helper</strong> is a build-time helper plugin for Unreal Engine Android projects that use Unreal chunking and Google Play Asset Delivery through Android App Bundle builds.</p>
+      <p>The plugin helps generated non-base chunk pak files become Android asset packs and provides Blueprint access to the generated PAD asset pack names, so developers do not need to manually maintain the asset pack name array.</p>
+      <div class="note">This plugin does not replace Unreal Engine’s GooglePAD plugin. It assists the AAB asset-pack packaging workflow and provides helper Blueprint functions around generated pack names.</div>
+    </section>
 
-<div class="content">
-
-  <!-- GAMES -->
-  <div class="section" id="games">
-    <h2>Games</h2>
-
-    <div class="panel game-card">
-      <img src="forg.png" alt="Forgotten Quest">
-
-      <div class="game-info">
-        <h2>FORGOTTEN QUEST</h2>
-
-        <p>In this single-player fantasy RPG, harness the power of three different classes in one character! Freely switch between sword mastery, archery, and magic to create your own unique combat style.
-
-Take full control with a top-down camera and dive into action-packed battles. Fight through dungeons, gather powerful equipment, and build your hero in your own way. Gain strategic advantages by using each class’s unique abilities and defeat your enemies with skill and strategy.</p>
-
-        <ul class="feature-list">
-          <li>✔️ Three classes in one: Warrior, Archer, Mage</li>
-          <li>✔️ Immersive single-player story</li>
-          <li>✔️ Top-down gameplay with intuitive controls</li>
-          <li>✔️ Equipment and skill progression</li>
-          <li>✔️ Play offline anytime you want</li>
-        </ul>
-
-        <p>Start your adventure now and shape your destiny!</p>
-
-        <div class="button-row">
-          <a class="btn primary" href="https://play.google.com/store/apps/dev?id=7220577446350968191&hl=en-US" target="_blank" rel="noopener noreferrer">
-            <i class="fa-brands fa-google-play"></i>
-            <span>Play Store</span>
-          </a>
-
-          <a class="btn" href="privacy-policy.html">
-            <i class="fa-solid fa-shield-halved"></i>
-            <span>Privacy Policy</span>
-          </a>
-
-          <a class="btn" href="patch-notes.html">
-            <i class="fa-solid fa-scroll"></i>
-            <span>Patch Notes</span>
-          </a>
-        </div>
+    <section id="features">
+      <h2>Features</h2>
+      <div class="grid">
+        <div class="card"><h3>Generated Pack List</h3><p>Returns the generated PAD asset pack names as a string array for Blueprint workflows.</p></div>
+        <div class="card"><h3>Automatic AAB Helper</h3><p>Assists chunk-based pak files being copied/registered as Android asset packs during packaging.</p></div>
+        <div class="card"><h3>Blueprint Friendly</h3><p>Provides Blueprint-callable functions for getting the generated asset pack list.</p></div>
+        <div class="card"><h3>Google PAD Workflow</h3><p>Designed to work alongside Unreal’s GooglePAD RequestDownload and GetDownloadState nodes.</p></div>
       </div>
-    </div>
-  </div>
+      <h3>Main Blueprint Functions</h3>
+      <table><thead><tr><th>Function</th><th>Purpose</th></tr></thead><tbody>
+        <tr><td><code>Get Generated PAD Asset Packs</code></td><td>Returns the generated PAD asset pack names as a string array.</td></tr>
+        <tr><td><code>Is Generated PAD Asset Pack</code></td><td>Checks whether a given string exists in the generated PAD asset pack list.</td></tr>
+      </tbody></table>
+    </section>
 
-  <!-- COMMUNITY -->
-  <div class="section" id="community">
-    <h2>Community</h2>
+    <section id="requirements">
+      <h2>Requirements</h2>
+      <table><tbody>
+        <tr><th>Engine Version</th><td>Unreal Engine 5.6</td></tr>
+        <tr><th>Target Platform</th><td>Android</td></tr>
+        <tr><th>Build Format</th><td>Android App Bundle (.aab)</td></tr>
+        <tr><th>Required Engine Plugin</th><td>GooglePAD plugin enabled</td></tr>
+        <tr><th>Use Case</th><td>Chunk-based asset packaging with Google Play Asset Delivery</td></tr>
+      </tbody></table>
+    </section>
 
-    <div class="cards">
+    <section id="installation">
+      <h2>Installation</h2>
+      <ol>
+        <li>Copy the <code>PadPackAABHelper</code> plugin folder into your project’s <code>Plugins</code> directory.</li>
+        <li>Restart Unreal Editor.</li>
+        <li>Open <strong>Edit → Plugins</strong>.</li>
+        <li>Enable <strong>PAD Pack AAB Helper</strong>.</li>
+        <li>Make sure Unreal’s built-in <strong>GooglePAD</strong> plugin is enabled.</li>
+        <li>Restart the editor again if prompted.</li>
+      </ol>
+      <h3>Expected Folder Structure</h3>
+      <pre><code>YourProject/
+  Plugins/
+    PadPackAABHelper/
+      PadPackAABHelper.uplugin
+      Source/
+        PadPackAABHelper/
+          PadPackAABHelper.Build.cs
+          Public/
+          Private/</code></pre>
+    </section>
 
-      <a class="card" href="https://www.youtube.com/@mekgamestudios" target="_blank" rel="noopener noreferrer">
-        <img src="youtube-cover.png" alt="Mek Game Studios YouTube">
-        <div class="overlay">
-          <i class="fa-brands fa-youtube"></i>
-          <h3>YouTube</h3>
-          <p>Open YouTube channel</p>
-        </div>
-      </a>
+    <section id="setup">
+      <h2>Project Setup</h2>
+      <h3>1. Enable Android App Bundle</h3><p>Use Android App Bundle packaging for Google Play distribution.</p>
+      <h3>2. Use Chunk Labels</h3><p>Use Unreal’s chunking system through Primary Asset Labels or your preferred chunk setup. Non-base chunk pak files can be converted into asset packs.</p>
+      <h3>3. Keep Base Content Minimal</h3><p>Keep startup UI, update/download UI, managers, and required base assets in chunk 0. Gameplay maps and heavy assets should be assigned to non-base chunks.</p>
+      <h3>4. Verify Generated Pak Chunks</h3><pre><code>pakchunk101-Android_ASTC.pak
+pakchunk104-Android_ASTC.pak
+pakchunk112-Android_ASTC.pak</code></pre>
+    </section>
 
-      <a class="card" href="https://www.instagram.com/mekgamestudios/" target="_blank" rel="noopener noreferrer">
-        <img src="instagram-cover.png" alt="Mek Game Studios Instagram">
-        <div class="overlay">
-          <i class="fa-brands fa-instagram"></i>
-          <h3>Instagram</h3>
-          <p>Open Instagram profile</p>
-        </div>
-      </a>
+    <section id="blueprint">
+      <h2>Blueprint Usage</h2>
+      <h3>Get Generated Asset Pack Names</h3>
+      <p>Use <code>Get Generated PAD Asset Packs</code> to retrieve the generated asset pack names. The returned array can be passed to Unreal’s GooglePAD <code>RequestDownload</code> workflow.</p>
+      <pre><code>Event Construct / BeginPlay
+  → Get Generated PAD Asset Packs
+  → Save result to AllPacks array
+  → RequestDownload(AllPacks)</code></pre>
+      <h3>Recommended Download Flow</h3>
+      <pre><code>Get Generated PAD Asset Packs
+  → RequestDownload
+  → Start Timer
+  → ForEach AllPacks:
+       GetDownloadState
+       Switch on DownloadStatus
+       Update progress UI
+       ReleaseDownloadState
+  → If all completed:
+       Clear Timer
+       Continue to game</code></pre>
+      <h3>Important Notes</h3>
+      <ul>
+        <li>Do not call <code>Get Generated PAD Asset Packs</code> every timer tick. Cache it once in an array.</li>
+        <li>Always release each download state after reading it.</li>
+        <li>Use GooglePAD’s own <code>RequestDownload</code>, <code>GetDownloadState</code>, and <code>Show Confirmation Dialog</code> nodes for actual PAD download control.</li>
+      </ul>
+    </section>
 
-      <div class="card discord-card">
-  <iframe 
-    src="https://discord.com/widget?id=1389220635917422714&theme=dark"
-    allowtransparency="true"
-    frameborder="0"
-    sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
-  </iframe>
+    <section id="packaging">
+      <h2>Packaging Workflow</h2>
+      <ol>
+        <li>Assign your maps/assets to chunks.</li>
+        <li>Package the project as Android App Bundle.</li>
+        <li>The plugin assists the generated pak chunks being included as asset packs.</li>
+        <li>Upload the AAB to Google Play Console.</li>
+        <li>Verify asset packs in Play Console if needed.</li>
+      </ol>
+      <h3>Expected Build Log Examples</h3>
+      <pre><code>PAD Pack AAB Helper
+Searching Saved/StagedBuilds for generated pak chunks...
+Found non-base pak files
+Created/updated on_demand pack
+Generated padpacks.txt</code></pre>
+      <div class="warning">If no non-base pak files are generated, check your chunk labels, cook rules, asset references, and packaging settings.</div>
+    </section>
 
-  <div class="discord-footer">
-    <a class="btn" href="https://discord.gg/vJSEkh9yKc" target="_blank">
-      <i class="fa-brands fa-discord"></i>
-      Join Discord Server
-    </a>
-  </div>
-</div>
+    <section id="troubleshooting">
+      <h2>Troubleshooting</h2>
+      <h3>Generated Pack Array Is Empty</h3>
+      <ul><li>Make sure non-base pak chunks are actually generated.</li><li>Check Primary Asset Label chunk IDs.</li><li>Check whether heavy maps/assets are accidentally referenced by chunk 0.</li></ul>
+      <h3>On-Demand Packs Are Missing</h3>
+      <ul><li>Verify staged build paks under <code>Saved/StagedBuilds/Android_ASTC/.../Content/Paks</code>.</li><li>Check whether the asset was pulled into <code>pakchunk0</code> by a hard reference.</li><li>Use UnrealPak <code>-List</code> to inspect pak contents.</li></ul>
+      <h3>Build Fails with Missing Platform Properties</h3>
+      <pre><code>"Modules": [
+  {
+    "Name": "PadPackAABHelper",
+    "Type": "Runtime",
+    "LoadingPhase": "Default",
+    "PlatformAllowList": [ "Android" ]
+  }
+]</code></pre>
+      <h3>Download Does Not Continue on Mobile Data</h3><p>Use GooglePAD’s <code>Show Confirmation Dialog</code> when the download state is <code>REQUIRES_USER_CONFIRMATION</code>.</p>
+    </section>
 
-    </div>
-  </div>
-
-  <!-- CONTACT -->
-  <div class="section" id="contact">
-    <h2>Contact</h2>
-
-    <div class="panel contact">
-      <button class="btn" type="button" onclick="mail()">
-        <i class="fa-solid fa-envelope"></i>
-        <span>mek@mekgamestudios.com</span>
-      </button>
-
-      <a class="btn" href="https://www.instagram.com/eminkurkcu" target="_blank" rel="noopener noreferrer">
-        <i class="fa-brands fa-instagram"></i>
-        <span>Instagram</span>
-      </a>
-
-      <a class="btn" href="https://discord.gg/vJSEkh9yKc" target="_blank" rel="noopener noreferrer">
-        <i class="fa-brands fa-discord"></i>
-        <span>Discord</span>
-      </a>
-    </div>
-  </div>
-
-</div>
-
-<script>
-function mail(){
-  const to = "mek@mekgamestudios.com";
-  const subject = "Forgotten Quest - Player Feedback & Support";
-  const body = `Hello,
-
-I want to share feedback about Forgotten Quest.
-
-Device:
-Problem/Feedback:`;
-
-  const mailto = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  const gmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-  let triggered = false;
-
-  window.addEventListener("blur", () => {
-    triggered = true;
-  }, { once: true });
-
-  window.location.href = mailto;
-
-  setTimeout(() => {
-    if (!triggered) {
-      window.location.href = gmail;
-    }
-  }, 1200);
-}
-</script>
-
+    <section id="support">
+      <h2>Support</h2>
+      <p>Publisher: <strong>Mek Game Studios</strong></p>
+      <p>Website: <a href="https://mekgamestudios.com" target="_blank" rel="noopener">mekgamestudios.com</a></p>
+      <p>Discord Support: <a href="https://discord.gg/vJSEkh9yKc" target="_blank" rel="noopener">Join Discord</a></p>
+    </section>
+  </main>
+  <footer><div class="wrap">© 2026 Mek Game Studios. PAD Pack AAB Helper documentation.</div></footer>
 </body>
 </html>
